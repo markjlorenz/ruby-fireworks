@@ -4,21 +4,20 @@ Thread.abort_on_exception = true
 
 require 'curses'
 require 'io/console'
+
+YMAX, XMAX = STDIN.winsize
+CLOCK   = 0.1
+PADDING = 20
+
+require_relative './curses_lib'
 require_relative './launch'
 require_relative './bang'
 require_relative './launch_view'
 require_relative './bang_view'
 
-CLOCK   = 0.1
-YMAX    = 30
-XMAX    = 80
-PADDING = 20
-
-Curses::start_color
 Curses::init_screen
-Curses::nl
-Curses::curs_set(0) # don't need to see that
 
+# yes, I am bad, and I want to date your daughter.
 class Range
   def any
     rand(self)
@@ -64,6 +63,3 @@ end
 #            Ez*(Py-Ey)
 # Sy  = -------------------  + Ey
 #              Ez+Pz
-#
-#
-#

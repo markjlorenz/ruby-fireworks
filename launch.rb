@@ -5,18 +5,23 @@ module Launch
     attr_accessor :position
     attr_accessor :speed
     attr_accessor :time_to_explosion
+    attr_accessor :last_frame
   end
 
   class InitialFrame < BaseFrame
-    XSPEEDRANGE = (0..3)
-    YSPEEDRANGE = (5..15)
-    ZSPEEDRANGE = (0.1..0.2)
+    EXPLOSIONRANGE = (20..30)
+    YSPEEDMAX      = Math.sqrt(2 * (YMAX-PADDING) * GRAVITY)
+    XSPEEDRANGE    = (0..3)
+    YSPEEDRANGE    = (5..YSPEEDMAX)
+    ZSPEEDRANGE    = (0.1..0.2)
+    DUDHEIGHT      = 2
 
     def initialize
-      start_x                = (PADDING..XMAX-PADDING).any
-      self.position          = {x: start_x, y: 0, z: 0}
-      self.speed             = {x: XSPEEDRANGE.any, y: YSPEEDRANGE.any, z: ZSPEEDRANGE.any}
-      self.time_to_explosion = (20..30).any
+      start_x            = (PADDING..XMAX-PADDING).any
+      @position          = {x: start_x, y: 0, z: 0}
+      @speed             = {x: XSPEEDRANGE.any, y: YSPEEDRANGE.any, z: ZSPEEDRANGE.any}
+      @time_to_explosion = EXPLOSIONRANGE.any
+      @last_frame        = self
     end
 
     def alive?
@@ -27,10 +32,10 @@ module Launch
   class Frame < BaseFrame
 
     def initialize previous
-      @previous = previous
+      @last_frame = previous
       calc_speed
       calc_position
-      self.time_to_explosion = @previous.time_to_explosion - 1
+      @time_to_explosion = @last_frame.time_to_explosion - 1
       try_bang
     end
 
@@ -38,8 +43,12 @@ module Launch
       !time_to_explosion.zero?
     end
 
+    def dud?
+      position[:y] < DUDHEIGHT && !alive?
+    end
+
     def try_bang
-      Bang.fire(position) if !alive?
+      Bang.fire(position) if !alive? && !dud?
     end
 
     def calc_position
@@ -51,14 +60,14 @@ module Launch
 
     def calc_speed
       self.speed = xyz do |coord|
-        @previous.speed[coord]
+        last_frame.speed[coord]
       end
       speed.merge! y: (speed[:y] - GRAVITY*CLOCK)
     end
 
     def previous_terms
       xyz do |coord|
-        @previous.position[coord] + @previous.speed[coord]*CLOCK
+        last_frame.position[coord] + last_frame.speed[coord]*CLOCK
       end
     end
 

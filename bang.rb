@@ -3,6 +3,7 @@ module Bang
     attr_reader :particles
     attr_reader :speed
     attr_reader :time_to_live
+    attr_reader :last_frame
   end
 
   class InitialFrame < BaseFrame
@@ -13,6 +14,7 @@ module Bang
       @speed        = SPEEDRANGE.any
       @time_to_live = TIMETOLIVERANGE.any
       @particles    = Array.new(10, {x: origin[:x], y: origin[:y],  z: origin[:z]})
+      @last_frame   = self
     end
 
     def alive?

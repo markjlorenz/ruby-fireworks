@@ -1,3 +1,4 @@
+require_relative './curses_lib'
 module Launch
   def self.fire
     Thread.new do
@@ -10,11 +11,7 @@ module Launch
   end
 
   class View
-    ORANGE       = 20
-    ORANGE_COLOR = 20
-    Curses.start_color
-    Curses.init_color ORANGE, 254, 254, 0
-    Curses.init_pair  ORANGE_COLOR, ORANGE, Curses::COLOR_BLACK
+    include CursesLib
 
     def initialize
       @last_frame = Launch::InitialFrame.new
@@ -41,21 +38,11 @@ module Launch
     end
 
     def white
-      attrib Curses::A_BOLD do yield end
+      attrib(Curses::A_BOLD) { yield }
     end
 
     def burnt
-      attrib Curses::color_pair(ORANGE_COLOR) do yield end
-    end
-
-    def attrib *attributes
-      attributes.each do |attribute|
-        Curses.attron  attribute
-      end
-      yield
-      attributes.each do |attribute|
-        Curses.attroff  attribute
-      end
+      attrib(Curses::color_pair(ORANGE_COLOR)) { yield }
     end
 
   end
