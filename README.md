@@ -1,5 +1,5 @@
 # TTY Fireworks :fireworks:
-> Fireworks for your terminal
+> Fireworks for your terminal.  Make post-commit hooks fun again!
 
 ## TL;DR
 ![fireworks](https://github.com/dapplebeforedawn/ruby-fireworks/raw/master/sample.gif)
