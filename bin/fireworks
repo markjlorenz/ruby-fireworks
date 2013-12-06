@@ -34,11 +34,24 @@ Thread.new do
   end
 end
 
+readLoop = lambda do |fire|
+  lambda do
+    loop do
+      char = STDIN.getch
+      Curses::clear if char == "c"
+      Launch.fire if fire
+      exit if char == "q"
+    end
+  end
+end
+
+readLoop[true].call if ARGV.none? { |arg| arg == "-r" }
+
+Thread.new &readLoop[false]
+
 loop do
-  char = STDIN.getch
-  exit if char == "q"
-  Curses::clear if char == "c"
   Launch.fire
+  sleep Random.rand(0.5..2.0)
 end
 
 # http://www.petesqbsite.com/sections/tutorials/tuts/perspective.html
