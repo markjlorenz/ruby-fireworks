@@ -33,6 +33,12 @@ module Bang
       @particles    = calc_particles
     end
 
+    def alive?
+      !time_to_live.zero?
+    end
+
+    private
+
     def calc_particles
       # calculation intentionally not a linearly growning circle
       @last_frame.particles.map.with_index do |particle, idx|
@@ -41,10 +47,6 @@ module Bang
           y: Math.sin(@angle_increment * idx) * CLOCK * speed + particle[:y],
         }
       end
-    end
-
-    def alive?
-      !time_to_live.zero?
     end
 
   end

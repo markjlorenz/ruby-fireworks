@@ -14,7 +14,6 @@ module Launch
     XSPEEDRANGE    = (0..3)
     YSPEEDRANGE    = (5..YSPEEDMAX)
     ZSPEEDRANGE    = (0.1..0.2)
-    DUDHEIGHT      = 2
 
     def initialize
       start_x            = (PADDING..XMAX-PADDING).any
@@ -30,6 +29,7 @@ module Launch
   end
 
   class Frame < BaseFrame
+    DUDHEIGHT = 2
 
     def initialize previous
       @last_frame = previous
@@ -42,6 +42,8 @@ module Launch
     def alive?
       !time_to_explosion.zero?
     end
+
+    private
 
     def dud?
       position[:y] < DUDHEIGHT && !alive?
