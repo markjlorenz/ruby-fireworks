@@ -1,6 +1,8 @@
 # TTY Fireworks :fireworks:
 > Fireworks for your terminal
 
+## TL;DR
+![https://github.com/dapplebeforedawn/ruby-fireworks/raw/sample.gif](fireworks)
 
 ## Installation
 ```bash
