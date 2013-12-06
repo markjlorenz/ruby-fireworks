@@ -2,7 +2,7 @@
 > Fireworks for your terminal
 
 ## TL;DR
-![https://github.com/dapplebeforedawn/ruby-fireworks/raw/sample.gif](fireworks)
+![https://github.com/dapplebeforedawn/ruby-fireworks/raw/master/sample.gif](fireworks)
 
 ## Installation
 ```bash
