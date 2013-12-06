@@ -11,9 +11,10 @@
 
 ## Usage
 ```bash
-  fireworks
+  fireworks [-r]
 ```
 
+ - `-r` random firework
  - `q` quits
  - `c` clears the screen
  - all other keys fire a salvo
