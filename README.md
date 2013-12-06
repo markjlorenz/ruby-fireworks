@@ -1,4 +1,4 @@
-# Tty::Fireworks :fireworks:
+# TTY Fireworks :fireworks:
 > Fireworks for your terminal
 
 
