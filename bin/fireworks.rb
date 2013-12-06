@@ -9,11 +9,11 @@ YMAX, XMAX = STDIN.winsize
 CLOCK   = 0.1
 PADDING = 20
 
-require_relative './curses_lib'
-require_relative './launch'
-require_relative './bang'
-require_relative './launch_view'
-require_relative './bang_view'
+# require_relative './curses_lib'
+# require_relative './launch'
+# require_relative './bang'
+# require_relative './launch_view'
+# require_relative './bang_view'
 
 Curses::init_screen
 
